@@ -3,6 +3,7 @@ import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import laravel from 'laravel-vite-plugin';
 import { execSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vite';
 
 /**
@@ -19,18 +20,51 @@ const hasPhp = (() => {
     }
 })();
 
-export default defineConfig({
+const reactPlugin = () =>
+    react({
+        babel: {
+            plugins: ['babel-plugin-react-compiler'],
+        },
+    });
+
+/**
+ * `vite build --mode static` produces a standalone site in `dist/` from
+ * `index.html` and `resources/js/static.jsx`, with no Laravel or Inertia
+ * involvement. BASE_PATH sets the public sub-path (default `/`), which
+ * GitHub Pages needs when the site is served from a repository path.
+ */
+const staticConfig = () => {
+    const base = process.env.BASE_PATH || '/';
+
+    return {
+        base,
+        plugins: [reactPlugin(), tailwindcss()],
+        define: {
+            'import.meta.env.VITE_ASSET_BASE': JSON.stringify(base),
+        },
+        resolve: {
+            alias: {
+                '@': fileURLToPath(new URL('./resources/js', import.meta.url)),
+            },
+        },
+        build: {
+            outDir: 'dist',
+            emptyOutDir: true,
+        },
+        esbuild: {
+            jsx: 'automatic',
+        },
+    };
+};
+
+const laravelConfig = () => ({
     plugins: [
         laravel({
             input: ['resources/css/app.css', 'resources/js/app.jsx'],
             ssr: 'resources/js/ssr.jsx',
             refresh: true,
         }),
-        react({
-            babel: {
-                plugins: ['babel-plugin-react-compiler'],
-            },
-        }),
+        reactPlugin(),
         tailwindcss(),
         ...(hasPhp
             ? [
@@ -44,3 +78,5 @@ export default defineConfig({
         jsx: 'automatic',
     },
 });
+
+export default defineConfig(({ mode }) => (mode === 'static' ? staticConfig() : laravelConfig()));

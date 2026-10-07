@@ -1,7 +1,8 @@
-import { Head } from '@inertiajs/react';
 import { Maximize2, Menu, X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
+import { Head } from '@/components/head';
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
+import { asset } from '@/lib/utils';
 
 const BRAND = 'CTK Incorporated';
 
@@ -47,7 +48,7 @@ const AFFILIATIONS = [
  */
 const GALLERY = [
     {
-        src: '/images/armored-grey-front.png',
+        src: asset('/images/armored-grey-front.png'),
         width: 1200,
         height: 916,
         alt: 'Grey armored van with bull bar, front three-quarter view',
@@ -57,7 +58,7 @@ const GALLERY = [
         featured: true,
     },
     {
-        src: '/images/guards-fleet.png',
+        src: asset('/images/guards-fleet.png'),
         width: 405,
         height: 272,
         alt: 'Uniformed vehicle crews standing in formation in front of armored vans',
@@ -67,7 +68,7 @@ const GALLERY = [
         fill: true,
     },
     {
-        src: '/images/fleet-lineup.png',
+        src: asset('/images/fleet-lineup.png'),
         width: 392,
         height: 245,
         alt: 'A row of CTK armored vehicles parked side by side',
@@ -77,7 +78,7 @@ const GALLERY = [
         fill: true,
     },
     {
-        src: '/images/armored-head-on.jpg',
+        src: asset('/images/armored-head-on.jpg'),
         width: 1509,
         height: 1279,
         alt: 'Black armored van seen head-on, showing the armored windscreen and bull bar',
@@ -85,7 +86,7 @@ const GALLERY = [
         caption: 'Armored cab, head-on',
     },
     {
-        src: '/images/armored-side.png',
+        src: asset('/images/armored-side.png'),
         width: 403,
         height: 257,
         alt: 'Black armored van, side view, with the ctkinc.net web address on the body',
@@ -252,7 +253,7 @@ export default function Welcome() {
                 >
                     <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 sm:px-8">
                         <a href="#top" className="flex items-center" aria-label="CTK Incorporated, back to top" onClick={() => setMenuOpen(false)}>
-                            <img src="/images/ctk-logo.png" alt="CTK Inc." width="1040" height="200" className="h-7 w-auto sm:h-9" />
+                            <img src={asset('/images/ctk-logo.png')} alt="CTK Inc." width="1040" height="200" className="h-7 w-auto sm:h-9" />
                         </a>
 
                         <nav className="hidden items-center gap-1 sm:flex" aria-label="Sections">
@@ -345,7 +346,7 @@ export default function Welcome() {
 
                         <div className="animate-in fade-in slide-in-from-right-8 delay-200 duration-1000 fill-mode-both motion-reduce:animate-none">
                             <img
-                                src="/images/armored-black-front.png"
+                                src={asset('/images/armored-black-front.png')}
                                 alt="Black CTK armored van, front three-quarter view, with bull bar and armored windscreen"
                                 width="1600"
                                 height="1176"
@@ -389,7 +390,7 @@ export default function Welcome() {
                         <Reveal variant="reveal-scale" delay={120} className="relative lg:justify-self-end">
                             <figure className="relative overflow-hidden rounded-2xl bg-white ring-1 ring-black/8 dark:ring-white/10">
                                 <img
-                                    src="/images/armored-head-on.jpg"
+                                    src={asset('/images/armored-head-on.jpg')}
                                     alt="Black CTK armored van seen head-on, showing the armored windscreen and bull bar"
                                     width="1509"
                                     height="1279"

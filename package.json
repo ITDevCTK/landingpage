@@ -6,6 +6,8 @@
     "scripts": {
         "build": "vite build",
         "build:ssr": "vite build && vite build --ssr",
+        "build:static": "vite build --mode static",
+        "dev:static": "vite --mode static",
         "dev": "vite",
         "format": "prettier --write resources/",
         "format:check": "prettier --check resources/",
